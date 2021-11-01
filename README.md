@@ -15,3 +15,4 @@
 7) .terraformrc и terraform.rc - игнорирование файлов .terraformrc и terraform.rc.
 
 Изменение в README.md
+Изменение в README.md №2
