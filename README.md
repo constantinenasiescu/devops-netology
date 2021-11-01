@@ -13,3 +13,5 @@
 5) override.tf и override.tf.json - игнорирование файлов override.tf и override.tf.json.
 6) \*_override.tf и \*_override.tf.json - исключить все файлы, которые содержат \*_override.tf и \*_override.tf.json (build/abc_override.tf и def_override.tf.json)
 7) .terraformrc и terraform.rc - игнорирование файлов .terraformrc и terraform.rc.
+
+Изменение в README.md
