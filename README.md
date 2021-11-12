@@ -5,7 +5,7 @@
 1) Полный хэш коммита aefead2207ef7e2aa5dc81a34aedf0cad4c32545, сообщение "Update CHANGELOG.md".
 2) Тег для коммита 85024d3 - v0.12.23.
 3) Хэши родительских коммитов для b8d720 - 56cd7859e05c36c06b56d013b55a252d0bb7e158, 9ea88f22fc6269854151c571162c5bcf958bee2b/
-4) Хэши и комментарии между :
+4) Хэши и комментарии между v0.12.23 и v0.12.24:
     1) 33ff1c03bb960b332be3af2e333462dde88b279e (tag: v0.12.24) v0.12.24
     2) b14b74c4939dcab573326f4e3ee2a62e23e12f89 [Website] vmc provider links;
     3) 3f235065b9347a758efadc92295b540ee0a5e26e Update CHANGELOG.md;
