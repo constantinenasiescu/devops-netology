@@ -1,15 +1,37 @@
 # devops-netology
 
-## Задание №1 – Создать и настроить репозиторий для дальнейшей работы на курсе.
+## Домашнее задание к занятию "3.1. Работа в терминале, лекция 1"
 
-### Файл terraform/\.gitignore.
+1) Установил через sudo apt install virtualbox.
+2) Установил через sudo apt-get install vagrant.
+3) Использую терминал для Ubuntu 20.04.
+4) Создал папку и выполнил vagrant init. Заменил содержимое Vagrantfile предложенным скриптом. Запустил vagrant используя команду vagrant up.
+5) RAM: 1024mb, CPU: 2 cpu, HDD: 10gb, video: 4mb.
+6) Используя следующую конструкцию: 
 
-Все игнорирования файлов и папок происходят на том же уровне или ниже относительно terraform/\.gitignore.
+```terraform
+config.vm.provider "virtualbox" do |v|
+  v.memory = 1024
+  v.cpus = 2
+end
+```
+7) Попрактиковался в использовании vagrant ssh.
+8) Какой переменной можно задать длину журнала history, и на какой строчке manual это описывается?
+    1. HISTFILESIZE - максимальное число строк в файле истории для сохранения, строка 729.
+    2. HISTSIZE - число команд для сохранения, строка 742.
+Что делает директива ignoreboth в bash?
+ignoreboth это сокращение для 2х директив ignorespace and ignoredups, ignorespace - не сохранять команды начинающиеся с пробела, ignoredups - не сохранять команду, если такая уже имеется в истории.
+9) Фигурные скобки используются для передачи списка параметров, в том числе список комманд. В командах выполняет подстановку элементов из списка. Например, mkdir ./{A..Z}.txt создаст Файлы A.txt, B.txt...Z.txt. Строка 201.
+10) touch {1..100000}.txt создаст 100000 файлов. Создать 300000 файлов не получилось, возникла ошибка -bash: /usr/bin/touch: Argument list too long.
+11) Проверяет условие (в данном случае наличие каталога /tmp) и возвращает ее статус (0 или 1).
+12) Использовались следующие команды:
 
-1) \*\*/\.terraform/\* - будет игнорироваться содержимое папки (папок) с названием \.terraform, например, \.terraform/abc.json, build/\.terraform/def.exe.
-2) \*\.tfstate и \*\.tfstate.\* - игнорирование файлов с расширением \.tfstate и содержащие в своем названии \.tfstate\., например, abc.tfstate, terraform/build/abc.tfstate.exe.
-3) crash.log - игнорирование файла crash.log, который может находится в любой директории, например, terraform/lib/build/crash.log.
-4) \*.tfvars - исключение всех файлов с расширением .tfvars (пример: abc.tfvars).
-5) override.tf и override.tf.json - игнорирование файлов override.tf и override.tf.json.
-6) \*_override.tf и \*_override.tf.json - исключить все файлы, которые содержат \*_override.tf и \*_override.tf.json (build/abc_override.tf и def_override.tf.json)
-7) .terraformrc и terraform.rc - игнорирование файлов .terraformrc и terraform.rc.
+```bash
+mkdir /tmp/new_path_dir/
+cp /bin/bash /tmp/new_path_dir/
+PATH=/tmp/new_path_dir/:$PATH
+type -a bash
+```
+
+13) at - команда запускается в указанное время (например, at now + 1 minute), а batch - когда средняя загрузка опускается ниже 0,8.
+14) Выполнено vagrant suspend.
