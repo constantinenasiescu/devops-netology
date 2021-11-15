@@ -6,7 +6,7 @@
 2) Установил через sudo apt-get install vagrant.
 3) Использую терминал для Ubuntu 20.04.
 4) Создал папку и выполнил vagrant init. Заменил содержимое Vagrantfile предложенным скриптом. Запустил vagrant используя команду vagrant up.
-5) RAM: 1024mb, CPU: 2 cpu, HDD: 10gb, video: 4mb.
+5) RAM: 1024mb, CPU: 2 cpu, HDD: 64gb, video: 4mb.
 6) Используя следующую конструкцию: 
 
 ```terraform
