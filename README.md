@@ -78,28 +78,25 @@ sysctl fs.file-max
 ```
 и имеет значение 9223372036854775807 и обозначает максимальное количество дескрипторов файлов, которые выделяет ядро Linux.
 
-6) Запустил процесс, определил его PID, после чего в новом терминале смонтировал процесс в отдельный namespace, ps показывает другие процессы.
+6) Запустил процесс, определил его PID, после чего в новом терминале смонтировал процесс в отдельный namespace, ps 1 показывает под данным PID sleep 1h.
 ```text
 vagrant@vagrant:~$ sudo -i
-root@vagrant:~# sleep 1h
+root@vagrant:~# unshare -f --pid --mount-proc sleep 1h
 ```
 
 В новом терминале
 
 ```text
-vagrant@vagrant:~$ ps aux | grep sleep
-root        1301  0.0  0.0   8076   592 pts/0    S+   19:45   0:00 sleep 1h
-vagrant     1355  0.0  0.0   8900   736 pts/1    S+   19:46   0:00 grep --color=auto sleep
+vagrant@vagrant:~$ ps -e | grep sleep
+17032 pts/0    00:00:00 sleep
 vagrant@vagrant:~$ sudo -i
-root@vagrant:~# nsenter -t 1301 -p -m
-root@vagrant:/# ps
-    PID TTY          TIME CMD
-   1356 pts/1    00:00:00 sudo
-   1358 pts/1    00:00:00 bash
-   1367 pts/1    00:00:00 nsenter
-   1370 pts/1    00:00:00 bash
-   1379 pts/1    00:00:00 ps
+root@vagrant:~# nsenter -t 17032 -p -m
+root@vagrant:/# ps 1
+    PID TTY      STAT   TIME COMMAND
+      1 pts/0    S+     0:00 sleep 1h
 ```
+
+![nsenter](img/nsenter.png)
 
 7) :(){ :|:& };: это так называемая форк-бомба. По сути это рекурсивная функция с именем ":", которая в теле функции вызывает сама себя дважды, после чего, дочерние создают еще 2 новых фоновых процесса и так до бесконечности.
 Судя по всему, этот механизм помог в стабилизации:
