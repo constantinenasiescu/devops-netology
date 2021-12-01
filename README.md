@@ -6,23 +6,35 @@
 
 ```bash
 vagrant@vagrant:~$ telnet stackoverflow.com 80
-Trying 151.101.65.69...
+Trying 151.101.1.69...
 Connected to stackoverflow.com.
 Escape character is '^]'.
 GET /questions HTTP/1.0
 HOST: stackoverflow.com
-[press enter]
-[press enter]
 
-HTTP/1.1 400 Bad Request
+HTTP/1.1 301 Moved Permanently
+cache-control: no-cache, no-store, must-revalidate
+location: https://stackoverflow.com/questions
+x-request-guid: ea3c47a6-ea2a-4780-b10c-98c39655b85d
+feature-policy: microphone 'none'; speaker 'none'
+content-security-policy: upgrade-insecure-requests; frame-ancestors 'self' https://stackexchange.com
+Accept-Ranges: bytes
+Date: Wed, 01 Dec 2021 20:17:24 GMT
+Via: 1.1 varnish
 Connection: close
-Content-Length: 0
+X-Served-By: cache-ams21022-AMS
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1638389844.119505,VS0,VE75
+Vary: Fastly-SSL
+X-DNS-Prefetch-Control: off
+Set-Cookie: prov=7c3346bd-d4b9-b534-c6cf-d37265744fa8; domain=.stackoverflow.com; expires=Fri, 01-Jan-2055 00:00:00 GMT; path=/; HttpOnly
 
 Connection closed by foreign host.
 ```
 
-*HTTP/1.1 400 Bad Request* - стартовая строка ответа, в ней указывается тип (HTTP) и версия (1.1) ответа, далее код ошибки с описанием (400 Bad Request - некорректный запрос).
-Далее указывается, что соединение завершено, длина тела сообщения пустое. Далее указано, что соединение закрыто со стороны другого хоста (в данном случае stackoverflow.com 80).
+*HTTP/1.1 400 Bad Request* - стартовая строка ответа, в ней указывается тип (HTTP) и версия (1.1) ответа, далее код ошибки с описанием (301 Moved Permanently - сервер переехал).
+Затем идут заголовки ответа такие как дата, куки, кэш, content-security-policy и т.д. Далее указано, что соединение закрыто со стороны другого хоста (в данном случае stackoverflow.com 80).
 
 2) Выполнил запрос в браузере, с открытыми devtool. Код статуса ответа - 200. Дольше всего выполнялся как раз GET запрос https://stackoverflow.com/ - 304 мс.
 
