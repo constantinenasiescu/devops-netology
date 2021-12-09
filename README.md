@@ -129,7 +129,7 @@ default via 10.0.2.2 dev eth0 proto dhcp src 10.0.2.15 metric 100
 3) Выполнено, используя netstat
 
 ```bash
-root@vagrant:~# netstat -ntlp | grep LISTEN
+root@vagrant:~# netstat -ntlp
 tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN      556/systemd-resolve 
 tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      780/sshd: /usr/sbin 
 tcp        0      0 0.0.0.0:111             0.0.0.0:*               LISTEN      1/init              
