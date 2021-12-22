@@ -47,13 +47,14 @@ for result in result_os.split('\n'):
 
 import os
 
-bash_command = ["cd ~/PycharmProjects/devops-netology", "git status"]
+bash_command = ["cd " + os.getcwd(), "git status"]
 result_os = os.popen(' && '.join(bash_command)).read()
 
 for result in result_os.split('\n'):
     if result.find("изменено") != -1:
-        prepare_result = result.replace('\tизменено:   ', '')
+        prepare_result = result.replace('\tизменено:      ', '')
         print(os.path.abspath(prepare_result))
+
 ```
 
 ### Вывод скрипта при запуске при тестировании:
@@ -71,11 +72,15 @@ for result in result_os.split('\n'):
 import os
 import sys
 
-path = "~/PycharmProjects/devops-netology"
+path = os.getcwd()
 
 if len(sys.argv) >= 2:
     if os.path.exists(sys.argv[1] + "/.git"):
         path = sys.argv[1]
+else:
+    if not os.path.exists(path + "/.git"):
+        print("Current directory is not repository!")
+        sys.exit(1)
 
 bash_command = ["cd " + path, "git status"]
 result_os = os.popen(' && '.join(bash_command)).read()
@@ -84,6 +89,7 @@ for result in result_os.split('\n'):
     if result.find("изменено") != -1:
         prepare_result = result.replace('\tизменено:      ', '')
         print(os.path.abspath(prepare_result))
+
 ```
 
 ### Вывод скрипта при запуске при тестировании:
