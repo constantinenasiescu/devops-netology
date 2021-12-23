@@ -48,10 +48,10 @@
 ### Ваш скрипт:
 ```python
 #!/usr/bin/env python3
+
 import io
 import json
 import socket
-
 import yaml
 
 json_file_name = 'data.json'
