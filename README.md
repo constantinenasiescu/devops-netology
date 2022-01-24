@@ -130,7 +130,7 @@ changed: [server1.netology]
 PLAY RECAP *********************************************************************
 server1.netology           : ok=7    changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  
  
-constantine@constantine-3570R-370R-470R-450R-510R-4450RV:~/services/vagrant_project$ vagrant ssh
+constantine@constantine:~/services/vagrant_project$ vagrant ssh
 Welcome to Ubuntu 20.04.2 LTS (GNU/Linux 5.4.0-80-generic x86_64)
 
  * Documentation:  https://help.ubuntu.com
