@@ -160,6 +160,8 @@ test_db=# explain select * from clients where order_id is not null;
 (2 rows)
 ```
 
+Показывает стоимость (нагрузку на исполнение) запроса, а также фильтрацию по полю order_id для выборки.
+
 6) Выполнено.
 
  ```bash
