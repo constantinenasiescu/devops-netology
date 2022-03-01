@@ -14,6 +14,12 @@ constantine@constantine:~$ docker exec -it mysql-netologhy mysql -p123
 Статус БД и запросы
 
 ```bash
+mysql> use test_db
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+
 mysql> \s
 --------------
 mysql  Ver 8.0.28 for Linux on x86_64 (MySQL Community Server - GPL)
@@ -39,12 +45,6 @@ Uptime:			3 min 47 sec
 Threads: 2  Questions: 13  Slow queries: 0  Opens: 142  Flush tables: 3  Open tables: 61  Queries per second avg: 0.057
 --------------
 
-mysql> use test_db
-Reading table information for completion of table and column names
-You can turn off this feature to get a quicker startup with -A
-
-Database changed
-
 mysql> show tables;
 +-------------------+
 | Tables_in_test_db |
@@ -52,7 +52,6 @@ mysql> show tables;
 | orders            |
 +-------------------+
 1 row in set (0.00 sec)
-
 
 mysql> select count(*) from orders where price > 300;
 +----------+
