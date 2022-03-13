@@ -147,3 +147,22 @@ INSERT 0 8
 ```
 
 При изначальном проектировании таблицы можно было сделать ее партицированной, тогда бы не пришлось менять название изначальной и переносить в нее данные.
+
+4) ВЫполнено.
+
+```bash
+/var/lib/postgresql/data # pg_dump -U postgres -d test_database > test_database_dump.sql
+/var/lib/postgresql/data # ls -l
+total 12
+drwx------   19 postgres root          4096 Mar 13 16:38 pgdata
+-rw-rw-r--    1 1000     1000          2082 Mar 10 21:02 test_database.sql
+-rw-r--r--    1 root     root          3509 Mar 13 16:41 test_database_dump.sql
+
+```
+
+Для уникальности можно создать индекс или первичный ключ
+
+```bash
+test_database=# create index on orders (title);
+CREATE INDEX
+```
