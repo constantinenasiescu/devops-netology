@@ -10,7 +10,7 @@
 <br/>
 **"Basically this means that if the database has many many keys expiring in the same second, and these make up at least 25% of the current population of keys with an expire set, Redis can block in order to get the percentage of keys already expired below 25%."**
 <br/>
-
+<br/>
 Возможно, в случае отсутствия возможности масштабирования путем добавления новых ресурсов, наилучшим способом избежать подобной проблемы являются оперативное удаление записей с истекшим сроком (например, используя "активный путь" удаления каждые 100 мс).
 
 3) Вероятно, данная проблема связана со сбоями в сетевой инфраструктуре, высокой нагрузкой на сервер или с небольшим числом доступных соединений. Основные решения, позволяющие исправить данную:
