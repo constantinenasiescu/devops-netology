@@ -18,7 +18,7 @@
 * `terraform plan` выполняется без ошибок.
 
 ```commandline
-constantine@constantine-3570R-370R-470R-450R-510R-4450RV:~/PycharmProjects/devops-netology$ terraform plan
+constantine@constantine:~/PycharmProjects/devops-netology$ terraform plan
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   + create
@@ -120,6 +120,123 @@ Plan: 3 to add, 0 to change, 0 to destroy.
 Changes to Outputs:
   + external_ip_address_node01_yandex_cloud = (known after apply)
   + internal_ip_address_node01_yandex_cloud = (known after apply)
+
+```
+
+результат terraform apply 
+
+```commandline
+constantine@constantine:~/PycharmProjects/devops-netology$ terraform apply
+yandex_vpc_network.default: Refreshing state... [id=enp2j9hmpcieqcno5jif]
+yandex_vpc_subnet.default: Refreshing state... [id=e9b9v4ov9cph59g2tu72]
+
+Note: Objects have changed outside of Terraform
+
+Terraform detected the following changes made outside of Terraform since the last "terraform apply":
+
+  # yandex_vpc_network.default has been changed
+  ~ resource "yandex_vpc_network" "default" {
+        id         = "enp2j9hmpcieqcno5jif"
+        name       = "net"
+      ~ subnet_ids = [
+          + "e9b9v4ov9cph59g2tu72",
+        ]
+        # (3 unchanged attributes hidden)
+    }
+
+Unless you have made equivalent changes to your configuration, or ignored the relevant attributes using ignore_changes, the following plan may include actions to undo or respond to these changes.
+
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # yandex_compute_instance.vm-1 will be created
+  + resource "yandex_compute_instance" "vm-1" {
+      + created_at                = (known after apply)
+      + folder_id                 = (known after apply)
+      + fqdn                      = (known after apply)
+      + hostname                  = "vm-1.netology.cloud"
+      + id                        = (known after apply)
+      + metadata                  = {
+          + "ssh-keys" = <<-EOT EOT
+        }
+      + name                      = "vm-1"
+      + network_acceleration_type = "standard"
+      + platform_id               = "standard-v1"
+      + service_account_id        = (known after apply)
+      + status                    = (known after apply)
+      + zone                      = "ru-central1-a"
+
+      + boot_disk {
+          + auto_delete = true
+          + device_name = (known after apply)
+          + disk_id     = (known after apply)
+          + mode        = (known after apply)
+
+          + initialize_params {
+              + block_size  = (known after apply)
+              + description = (known after apply)
+              + image_id    = "fd80rnhvc47031anomed"
+              + name        = "root-node01"
+              + size        = 10
+              + snapshot_id = (known after apply)
+              + type        = "network-nvme"
+            }
+        }
+
+      + network_interface {
+          + index              = (known after apply)
+          + ip_address         = (known after apply)
+          + ipv4               = true
+          + ipv6               = (known after apply)
+          + ipv6_address       = (known after apply)
+          + mac_address        = (known after apply)
+          + nat                = true
+          + nat_ip_address     = (known after apply)
+          + nat_ip_version     = (known after apply)
+          + security_group_ids = (known after apply)
+          + subnet_id          = "e9b9v4ov9cph59g2tu72"
+        }
+
+      + placement_policy {
+          + host_affinity_rules = (known after apply)
+          + placement_group_id  = (known after apply)
+        }
+
+      + resources {
+          + core_fraction = 100
+          + cores         = 2
+          + memory        = 2
+        }
+
+      + scheduling_policy {
+          + preemptible = (known after apply)
+        }
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + external_ip_address_node01_yandex_cloud = (known after apply)
+  + internal_ip_address_node01_yandex_cloud = (known after apply)
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+yandex_compute_instance.vm-1: Creating...
+yandex_compute_instance.vm-1: Still creating... [10s elapsed]
+yandex_compute_instance.vm-1: Still creating... [20s elapsed]
+yandex_compute_instance.vm-1: Creation complete after 27s [id=fhmcri80f3910uic3pav]
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+
+Outputs:
 
 ```
 
