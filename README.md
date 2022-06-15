@@ -13,7 +13,6 @@
 
 * Создал файлы main.tf и versions.tf.
 * Добавил описание провайдера в main.tf
-* Добавил ключи для доступа к аккаунту в переменные окружения.
 * В файле main.tf создал ресурс yandex_compute_image. Параметр family взял из списка публичных образов, полученный при помощи команды `yc compute image list --folder-id standard-images`.
 * `terraform plan` выполняется без ошибок.
 
