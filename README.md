@@ -14,7 +14,7 @@
 * Создал файлы main.tf и versions.tf.
 * Добавил описание провайдера в main.tf
 * Добавил ключи для доступа к аккаунту в переменные окружения.
-* В файле main.tf создал ресурс yandex_compute_instance.vm-1. Образ взял из публичных, полученный при помощи команды `yc compute image list --folder-id standard-images`
+* В файле main.tf создал ресурс yandex_compute_image. Параметр family взял из списка публичных образов, полученный при помощи команды `yc compute image list --folder-id standard-images`.
 * `terraform plan` выполняется без ошибок.
 
 ```commandline
@@ -51,7 +51,7 @@ Terraform will perform the following actions:
           + initialize_params {
               + block_size  = (known after apply)
               + description = (known after apply)
-              + image_id    = "fd80rnhvc47031anomed"
+              + image_id    = "fd8mn5e1cksb3s1pcq12"
               + name        = "root-node01"
               + size        = 10
               + snapshot_id = (known after apply)
@@ -80,7 +80,7 @@ Terraform will perform the following actions:
 
       + resources {
           + core_fraction = 100
-          + cores         = 1
+          + cores         = 2
           + memory        = 2
         }
 
@@ -121,32 +121,16 @@ Changes to Outputs:
   + external_ip_address_node01_yandex_cloud = (known after apply)
   + internal_ip_address_node01_yandex_cloud = (known after apply)
 
+───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.
+
 ```
 
 результат terraform apply 
 
 ```commandline
 constantine@constantine:~/PycharmProjects/devops-netology$ terraform apply
-yandex_vpc_network.default: Refreshing state... [id=enp2j9hmpcieqcno5jif]
-yandex_vpc_subnet.default: Refreshing state... [id=e9b9v4ov9cph59g2tu72]
-
-Note: Objects have changed outside of Terraform
-
-Terraform detected the following changes made outside of Terraform since the last "terraform apply":
-
-  # yandex_vpc_network.default has been changed
-  ~ resource "yandex_vpc_network" "default" {
-        id         = "enp2j9hmpcieqcno5jif"
-        name       = "net"
-      ~ subnet_ids = [
-          + "e9b9v4ov9cph59g2tu72",
-        ]
-        # (3 unchanged attributes hidden)
-    }
-
-Unless you have made equivalent changes to your configuration, or ignored the relevant attributes using ignore_changes, the following plan may include actions to undo or respond to these changes.
-
-───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   + create
@@ -179,7 +163,7 @@ Terraform will perform the following actions:
           + initialize_params {
               + block_size  = (known after apply)
               + description = (known after apply)
-              + image_id    = "fd80rnhvc47031anomed"
+              + image_id    = "fd8mn5e1cksb3s1pcq12"
               + name        = "root-node01"
               + size        = 10
               + snapshot_id = (known after apply)
@@ -198,7 +182,7 @@ Terraform will perform the following actions:
           + nat_ip_address     = (known after apply)
           + nat_ip_version     = (known after apply)
           + security_group_ids = (known after apply)
-          + subnet_id          = "e9b9v4ov9cph59g2tu72"
+          + subnet_id          = (known after apply)
         }
 
       + placement_policy {
@@ -217,7 +201,33 @@ Terraform will perform the following actions:
         }
     }
 
-Plan: 1 to add, 0 to change, 0 to destroy.
+  # yandex_vpc_network.default will be created
+  + resource "yandex_vpc_network" "default" {
+      + created_at                = (known after apply)
+      + default_security_group_id = (known after apply)
+      + folder_id                 = (known after apply)
+      + id                        = (known after apply)
+      + labels                    = (known after apply)
+      + name                      = "net"
+      + subnet_ids                = (known after apply)
+    }
+
+  # yandex_vpc_subnet.default will be created
+  + resource "yandex_vpc_subnet" "default" {
+      + created_at     = (known after apply)
+      + folder_id      = (known after apply)
+      + id             = (known after apply)
+      + labels         = (known after apply)
+      + name           = "subnet"
+      + network_id     = (known after apply)
+      + v4_cidr_blocks = [
+          + "192.168.101.0/24",
+        ]
+      + v6_cidr_blocks = (known after apply)
+      + zone           = "ru-central1-a"
+    }
+
+Plan: 3 to add, 0 to change, 0 to destroy.
 
 Changes to Outputs:
   + external_ip_address_node01_yandex_cloud = (known after apply)
@@ -229,12 +239,16 @@ Do you want to perform these actions?
 
   Enter a value: yes
 
+yandex_vpc_network.default: Creating...
+yandex_vpc_network.default: Creation complete after 5s [id=enpcsahrc9l3e49ntd6f]
+yandex_vpc_subnet.default: Creating...
+yandex_vpc_subnet.default: Creation complete after 1s [id=e9b236467tbaa6gkm00d]
 yandex_compute_instance.vm-1: Creating...
 yandex_compute_instance.vm-1: Still creating... [10s elapsed]
 yandex_compute_instance.vm-1: Still creating... [20s elapsed]
-yandex_compute_instance.vm-1: Creation complete after 27s [id=fhmcri80f3910uic3pav]
+yandex_compute_instance.vm-1: Creation complete after 25s [id=fhmh98aqd2go498ri3j7]
 
-Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
 
 Outputs:
 
@@ -244,3 +258,4 @@ Outputs:
 1) Ответ на вопрос: при помощи какого инструмента (из разобранных на прошлом занятии) можно создать свой образ ami?
 На мой взгляд, при работе с YC отлично подойдет Packer. У него доступна гибкая конфигурация образа и возможность установки дополнительного софта для создания образа.
 2) Ссылку на репозиторий с исходной конфигурацией терраформа.
+https://github.com/Constantin174/devops-netology/tree/07-terraform-02-syntax#readme

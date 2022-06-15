@@ -13,6 +13,10 @@ provider "yandex" {
   zone      = "${var.zone}"
 }
 
+data "yandex_compute_image" "ubuntu" {
+    family = "ubuntu-2004-lts"
+}
+
 resource "yandex_compute_instance" "vm-1" {
   name       = "vm-1"
   zone       = "${var.zone}"
@@ -25,7 +29,7 @@ resource "yandex_compute_instance" "vm-1" {
 
   boot_disk {
     initialize_params {
-      image_id    = "${var.centos-7-image}"
+      image_id    = "${data.yandex_compute_image.ubuntu.id}"
       name        = "root-node01"
       type        = "network-nvme"
       size        = "10"
@@ -38,6 +42,6 @@ resource "yandex_compute_instance" "vm-1" {
   }
 
   metadata = {
-    ssh-keys = "centos:${file("~/.ssh/id_rsa.pub")}"
+    ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
   }
 }
