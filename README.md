@@ -50,7 +50,7 @@
       register: get_kibana
       until: get_kibana is succeeded
       tags: kibana
-    - name: Create directrory for Kibana
+    - name: Create directory for Kibana
       file:
         state: directory
         path: "{{ kibana_home }}"
