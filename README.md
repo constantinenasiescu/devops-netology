@@ -379,3 +379,254 @@ yandex_vpc_network.default: Destruction complete after 1s
 Destroy complete! Resources: 4 destroyed.
 
 ```
+
+3. Установка Nginx и LetsEncrypt
+Создал отдельную виртуальную машину, а также playbook и ansible-роль для установки nginx, certbot и python3-certbot-nginx, а также добавления специально подготовленного www.studywebservice.ru.conf файла для nginx. 
+Создал предварительно файл inventory.tf для автоматической генерации inventory для playbook. После отработки playbook 
+запустил генерацию сертификатов для DNS-записей используя команду 
+`sudo certbot --nginx --test-cert -d studywebservice.ru -d www.studywebservice.ru -d alertmanager.studywebservice.ru -d gitlab.studywebservice.ru -d grafana.studywebservice.ru -d prometheus.studywebservice.ru`.
+После этого, добавил upstream и настройки обратного прокси для каждого DNS. Окончательный вариант конфига
+
+```commandline
+upstream studywebservice {
+    server studywebservice.ru;
+    server www.studywebservice.ru;
+}
+
+server {
+    root /var/www/html;
+    server_name studywebservice.ru www.studywebservice.ru;
+    access_log   /var/log/nginx/access.log;
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/studywebservice.ru/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/studywebservice.ru/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+    location / {
+
+      proxy_set_header        Host $host;
+      proxy_set_header        X-Real-IP $remote_addr;
+      proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header        X-Forwarded-Proto $scheme;
+
+      proxy_pass          https://studywebservice;
+      proxy_read_timeout  90;
+
+      proxy_redirect      https://studywebservice.ru https://google.com;
+      proxy_redirect      https://www.studywebservice.ru https://google.com;
+    }
+
+}
+
+upstream alertmanager_studywebservice {
+    server alertmanager.studywebservice.ru;
+}
+
+
+server {
+    root /var/www/html;
+    server_name alertmanager.studywebservice.ru;
+    access_log   /var/log/nginx/access.log;
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/studywebservice.ru/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/studywebservice.ru/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+    location / {
+
+      proxy_set_header        Host $host;
+      proxy_set_header        X-Real-IP $remote_addr;
+      proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header        X-Forwarded-Proto $scheme;
+
+      proxy_pass          https://alertmanager_studywebservice;
+      proxy_read_timeout  90;
+
+      proxy_redirect      https://alertmanager.studywebservice.ru https://yandex.com;
+    }
+
+}
+
+upstream gitlab_studywebservice {
+    server gitlab.studywebservice.ru;
+}
+
+server {
+    root /var/www/html;
+    server_name gitlab.studywebservice.ru;
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/studywebservice.ru/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/studywebservice.ru/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+    location / {
+
+      proxy_set_header        Host $host;
+      proxy_set_header        X-Real-IP $remote_addr;
+      proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header        X-Forwarded-Proto $scheme;
+
+      proxy_pass          https://gitlab_studywebservice;
+      proxy_read_timeout  90;
+
+      proxy_redirect      https://gitlab.studywebservice.ru https://yandex.com;
+    }
+
+}
+
+upstream grafana_studywebservice {
+    server grafana.studywebservice.ru;
+}
+
+server {
+    root /var/www/html;
+    server_name grafana.studywebservice.ru;
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/studywebservice.ru/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/studywebservice.ru/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+    location / {
+
+      proxy_set_header        Host $host;
+      proxy_set_header        X-Real-IP $remote_addr;
+      proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header        X-Forwarded-Proto $scheme;
+
+      proxy_pass          https://grafana_studywebservice;
+      proxy_read_timeout  90;
+
+      proxy_redirect      https://grafana.studywebservice.ru https://yandex.com;
+    }
+
+
+}
+
+upstream prometheus_studywebservice {
+    server prometheus.studywebservice.ru;
+}
+
+server {
+    root /var/www/html;
+    server_name prometheus.studywebservice.ru;
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/studywebservice.ru/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/studywebservice.ru/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+    location / {
+
+      proxy_set_header        Host $host;
+      proxy_set_header        X-Real-IP $remote_addr;
+      proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header        X-Forwarded-Proto $scheme;
+
+      proxy_pass          https://prometheus_studywebservice;
+      proxy_read_timeout  90;
+
+      proxy_redirect      https://prometheus.studywebservice.ru https://yandex.com;
+    }
+
+}
+
+server {
+    if ($host = www.studywebservice.ru) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = studywebservice.ru) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    server_name studywebservice.ru www.studywebservice.ru;
+    listen 80;
+    return 404; # managed by Certbot
+
+
+
+
+}
+
+server {
+    if ($host = alertmanager.studywebservice.ru) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    server_name alertmanager.studywebservice.ru;
+    listen 80;
+    return 404; # managed by Certbot
+
+
+}
+
+server {
+    if ($host = gitlab.studywebservice.ru) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    server_name gitlab.studywebservice.ru;
+    listen 80;
+    return 404; # managed by Certbot
+
+
+}
+
+server {
+    if ($host = grafana.studywebservice.ru) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    server_name grafana.studywebservice.ru;
+    listen 80;
+    return 404; # managed by Certbot
+
+
+}
+
+server {
+    if ($host = prometheus.studywebservice.ru) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    server_name prometheus.studywebservice.ru;
+    listen 80;
+    return 404; # managed by Certbot
+
+
+}
+```
+После перезапуска nginx при открытии в браузуре любой DNS-записи отображается 502 ошибка
+[grafana](./img/grafana.png)
+
+4. Установка кластера MySQL
+
+Создал ресурс из 2 ВМ для master и clave реплик для кластера MySQL, используя terraform, а также отдельный ресурс 
+local_file для создания mysql_vars.tf, в который автоматически помещается адрес мастера, 
+после чего создал 3 ansible-роли - первая для общей установке MySQL на ВМ (включая создание пользователя wordpress), 
+остальные для конфигурирования мастера и слейва. В первой мы создаем БД wordpress, REPLICATION SLAVE пользователя и 
+копируем подготовленный mysqld.cnf. Во второй мы также копируем mysqld.cnf плюс конфигурируем репликацию, указывая 
+основные параметры для нее. `Вывод команды show slave status;`
+
+[replication_slave.](./img/replication_slave.png)
+
+Как видно, подключение со слейв-машины на мастер прошло успешно. Также репликация была успешно протестирована на примере
+создания таблиц и баз данных на мастере и автоматический перенос их на слейв.
