@@ -642,9 +642,10 @@ local_file для создания mysql_vars.tf, в который автома
 
 6. Установка Gitlab CE и Gitlab Runner
 
-Создал ресурсы и роли для установки gitlab и gitlab runner. После установки зашел в gitlab под рутом, предварительно поменяв пароль, 
-создал тестовый проект, затем на сервере с установленным runner'ом зарегистрировал его для установленного gitlab'а. 
-Создал pipeline для доставки файлов при любом коммите или создании тега.
+Создал ресурсы и роли для установки gitlab и gitlab runner. После установки зашел в gitlab под рутом, найдя его через команду `sudo nano /etc/gitlab/initial_root_password`, 
+создал тестовый проект, затем на сервере с установленным runner'ом зарегистрировал его для установленного gitlab'а. Создал ssh ключи для доступа к серверу app.studywebservice.ru и
+добавил приватный ключ в переменную SSH_PRIVATE_KEY (repository > settings > CI/CD > Variables). Создал pipeline для доставки файлов при любом коммите и создании тега.
+
 
 7. Установка Prometheus, Alert Manager, Node Exporter и Grafana
 
@@ -653,3 +654,36 @@ local_file для создания mysql_vars.tf, в который автома
 терраформе ресурс local_file для создания конфига prometheus, в который инжектятся ip-адреса серверов, где установлен node exporter, 
 а также мониторинга графаны, alert manager'а и самого prometheus. При создании инфраструктуры конфиг автоматически добавляется в файлы роли monitoring.
 При открытии графаны доступен дашборд отображающий метрики из Node Exporter по всем серверам.
+
+![grafana_dashboard](./img/grafana_dashboard.png)
+
+## Итог
+
+Скриншоты веб-интерфейсов всех сервисов
+
+Для Wordpress не приходят стили из-за того возникает ошибка смешанных запросов (mixed content was loaded over https but requested an insecure script), 
+т.е. запросы уходят по HTTP, а не по HTTPS. Судя по всему это связано с тем, что фронтенд отправляет их некорректно. Ошибка правится плагинами, либо нужно ковыряться в коде самого Wordpress.
+
+### studywebservice.ru
+
+![wordpress_ex1](./img/wordpress_ex1.png)
+
+### www.studywebservice.ru
+
+![wordpress_ex1](./img/wordpress_ex2.png)
+
+### gitlab.studywebservice.ru
+
+![gitlab](./img/gitlab.png)
+
+### grafana.studywebservice.ru
+
+![grafana_final](./img/grafana_final.png)
+
+### prometheus.studywebservice.ru
+
+![prometheus](./img/prometheus.png)
+
+### alertmanager.studywebservice.ru
+
+![alertmanager](./img/alertmanager.png)
