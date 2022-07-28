@@ -687,3 +687,9 @@ local_file для создания mysql_vars.tf, в который автома
 ### alertmanager.studywebservice.ru
 
 ![alertmanager](./img/alertmanager.png)
+
+## Ссылки
+
+[ansible](https://github.com/Constantin174/netology-diploma-ansible)
+
+[terraform](https://github.com/Constantin174/netology-diploma-terraform)
