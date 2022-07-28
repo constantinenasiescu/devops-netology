@@ -413,9 +413,6 @@ server {
 
       proxy_pass          https://studywebservice;
       proxy_read_timeout  90;
-
-      proxy_redirect      https://studywebservice.ru https://google.com;
-      proxy_redirect      https://www.studywebservice.ru https://google.com;
     }
 
 }
@@ -445,8 +442,6 @@ server {
 
       proxy_pass          https://alertmanager_studywebservice;
       proxy_read_timeout  90;
-
-      proxy_redirect      https://alertmanager.studywebservice.ru https://yandex.com;
     }
 
 }
@@ -475,8 +470,6 @@ server {
 
       proxy_pass          https://gitlab_studywebservice;
       proxy_read_timeout  90;
-
-      proxy_redirect      https://gitlab.studywebservice.ru https://yandex.com;
     }
 
 }
@@ -505,8 +498,6 @@ server {
 
       proxy_pass          https://grafana_studywebservice;
       proxy_read_timeout  90;
-
-      proxy_redirect      https://grafana.studywebservice.ru https://yandex.com;
     }
 
 
@@ -536,8 +527,6 @@ server {
 
       proxy_pass          https://prometheus_studywebservice;
       proxy_read_timeout  90;
-
-      proxy_redirect      https://prometheus.studywebservice.ru https://yandex.com;
     }
 
 }
