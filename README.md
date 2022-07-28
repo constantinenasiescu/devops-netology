@@ -208,7 +208,7 @@ internal_ip_address_vm1_yandex_cloud = [
 Создал предварительно файл inventory.tf для автоматической генерации inventory для playbook. После отработки playbook 
 запустил генерацию сертификатов для DNS-записей используя команду 
 `sudo certbot --nginx --test-cert -d studywebservice.ru -d www.studywebservice.ru -d alertmanager.studywebservice.ru -d gitlab.studywebservice.ru -d grafana.studywebservice.ru -d prometheus.studywebservice.ru`.
-После этого, добавил upstream и настройки обратного прокси для каждого DNS. Окончательный вариант конфига на текущий момент представлен в файле [nginx.conf](./nginx.conf).
+После этого, добавил upstream и настройки обратного прокси для каждого DNS. Вариант конфига на текущий момент представлен в файле [nginx.conf](./nginx.conf).
 После перезапуска nginx при открытии в браузуре любой DNS-записи отображается 502 ошибка
 
 ![grafana](./img/grafana.png)
