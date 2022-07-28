@@ -57,8 +57,7 @@ for this configuration.
 ```
 После чего создал VPC в файле network.tf и добавил две подсети для зон ru-central1-a и ru-central1-b. Terraform plan и terraform destroy выполняются без ошибок.
 
-Отдельно создал файл inventory.tf, в который будут добавляться описание ресурсов "local_file" с публичными ip-адресами и способами соединения, передаваемые в директорию inventory
-ansible роль для автоматизации и удобства процесса ее запуска.
+Отдельно создал файл inventory.tf, в который будут добавляться описание ресурсов "local_file" с публичными ip-адресами и способами соединения, передаваемые в директорию inventory ansible роли для автоматизации и удобства процесса ее запуска.
 
 ```
 constantine@constantine-3570R-370R-470R-450R-510R-4450RV:~/netology devops/Diploma/files/terraform$ terraform apply
