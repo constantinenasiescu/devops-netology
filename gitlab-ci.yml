@@ -12,7 +12,10 @@ deploy-job:
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
     - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - ssh ubuntu@"$TARGET_HOST" 'sudo chown -R ubuntu:ubuntu /var/www/appstudywebserviceru/wordpress'
     - ssh ubuntu@"$TARGET_HOST" 'sudo rm -rf /var/www/appstudywebserviceru/wordpress/*'
     - scp -r * ubuntu@"$TARGET_HOST":/var/www/appstudywebserviceru/wordpress
+    - ssh ubuntu@"$TARGET_HOST" 'sudo service apache2 restart'
+    - ssh ubuntu@"$TARGET_HOST" 'sudo chown -R www-data:www-data /var/www/appstudywebserviceru/wordpress'
   rules:
     - if: '$CI_COMMIT_TAG'
