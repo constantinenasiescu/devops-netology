@@ -263,27 +263,27 @@ local_file mysql_vars.tf для создания переменных по ум�
 
 ### studywebservice.ru
 
-![wordpress_ex1](./img/wordpress_ex1.png)
+![wordpress_ex1](./img/wordpress_ex1_final.png)
 
 ### www.studywebservice.ru
 
-![wordpress_ex1](./img/wordpress_ex2.png)
+![wordpress_ex1](./img/wordpress_ex2_final.png)
 
 ### gitlab.studywebservice.ru
 
-![gitlab](./img/gitlab.png)
+![gitlab](./img/gitlab_final.png)
 
 ### grafana.studywebservice.ru
 
-![grafana_final](./img/grafana_final.png)
+![grafana_final](./img/grafana_main_final.png)
 
 ### prometheus.studywebservice.ru
 
-![prometheus](./img/prometheus.png)
+![prometheus](./img/prometheus_final.png)
 
 ### alertmanager.studywebservice.ru
 
-![alertmanager](./img/alertmanager.png)
+![alertmanager](./img/alertmanager_final.png)
 
 ## Ссылки
 
